@@ -1,0 +1,125 @@
+:root {
+  color-scheme: light;
+  --ink: #172033;
+  --muted: #64748b;
+  --line: #d7dee8;
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --accent: #1769aa;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+.page-width {
+  width: min(100% - 24px, 820px);
+  margin: 0 auto;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  padding: max(20px, env(safe-area-inset-top)) 0 18px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 3px 0 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: .86rem;
+}
+
+.question-list { background: var(--surface); }
+
+.question {
+  padding: 22px 4px 24px;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 16px;
+}
+
+.question h2 {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.question-number {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.question-text { white-space: pre-wrap; }
+
+.question-images {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+}
+
+.question-images img {
+  display: block;
+  width: 100%;
+  max-height: 65vh;
+  border: 1px solid var(--line);
+  object-fit: contain;
+  background: #fff;
+}
+
+.question h3 {
+  margin: 19px 0 5px;
+  color: var(--muted);
+  font-size: .84rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.answer {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.source-note {
+  margin: 20px 4px 32px;
+  padding-bottom: env(safe-area-inset-bottom);
+  color: var(--muted);
+  font-size: .76rem;
+  text-align: center;
+}
+
+@media (min-width: 560px) {
+  .question { padding-right: 12px; padding-left: 12px; }
+  .question h2 { font-size: 1.16rem; }
+  .answer { font-size: 1.05rem; }
+}
