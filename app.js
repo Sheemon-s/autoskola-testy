@@ -117,11 +117,16 @@ function showQuestions(items) {
   readingToolbar.hidden = false;
   visibleQuestions = items;
   currentTopic = items.length === questions.length ? "Všetky otázky" : items[0].section;
-  activeTopic.textContent = currentTopic;
+  activeTopic.textContent = shortenTopicName(currentTopic);
   questionCount.textContent = `${items.length} otázok`;
   updateProgress(1);
   observeQuestions();
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function shortenTopicName(name) {
+  const words = name.trim().split(/\s+/);
+  return words.length > 3 ? `${words.slice(0, 3).join(" ")}...` : name;
 }
 
 function updateProgress(position) {

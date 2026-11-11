@@ -171,8 +171,14 @@ h1 {
 
 .reading-toolbar-top strong {
   overflow: hidden;
+  min-width: 0;
   color: var(--ink);
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reading-toolbar-top span {
+  flex: 0 0 auto;
   white-space: nowrap;
 }
 
