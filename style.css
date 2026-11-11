@@ -149,6 +149,49 @@ h1 {
 
 .question-list { background: var(--surface); }
 
+.reading-toolbar {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  margin: 0 -12px;
+  border-bottom: 1px solid var(--line);
+  padding: 10px 12px 9px;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(8px);
+}
+
+.reading-toolbar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.reading-toolbar-top strong {
+  overflow: hidden;
+  color: var(--ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress-track {
+  height: 5px;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #e7edf4;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width .2s ease;
+}
+
 .question {
   padding: 22px 4px 24px;
   border-bottom: 1px solid var(--line);
@@ -215,6 +258,7 @@ h1 {
 [hidden] { display: none !important; }
 
 @media (min-width: 560px) {
+  .reading-toolbar { margin-right: -12px; margin-left: -12px; }
   .question { padding-right: 12px; padding-left: 12px; }
   .question h2 { font-size: 1.16rem; }
   .answer { font-size: 1.05rem; }

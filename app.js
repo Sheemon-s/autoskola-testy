@@ -3,11 +3,19 @@ const questionCount = document.querySelector("#question-count");
 const topicMenu = document.querySelector("#topic-menu");
 const topicButtons = document.querySelector("#topic-buttons");
 const menuButton = document.querySelector("#menu-button");
+const readingToolbar = document.querySelector("#reading-toolbar");
+const activeTopic = document.querySelector("#active-topic");
+const progressLabel = document.querySelector("#progress-label");
+const progressBar = document.querySelector("#progress-bar");
 let questions = [];
+let visibleQuestions = [];
+let currentTopic = "";
+let observer;
 
 function createQuestion(item) {
   const article = document.createElement("article");
   article.className = "question";
+  article.dataset.questionId = item.id;
 
   const heading = document.createElement("h2");
   const number = document.createElement("span");
@@ -91,6 +99,10 @@ function showMenu() {
   topicMenu.hidden = false;
   questionList.hidden = true;
   menuButton.hidden = true;
+  readingToolbar.hidden = true;
+  visibleQuestions = [];
+  currentTopic = "";
+  if (observer) observer.disconnect();
   questionCount.textContent = `${questions.length} otázok v 10 okruhoch`;
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -102,8 +114,36 @@ function showQuestions(items) {
   topicMenu.hidden = true;
   questionList.hidden = false;
   menuButton.hidden = false;
+  readingToolbar.hidden = false;
+  visibleQuestions = items;
+  currentTopic = items.length === questions.length ? "Všetky otázky" : items[0].section;
+  activeTopic.textContent = currentTopic;
   questionCount.textContent = `${items.length} otázok`;
+  updateProgress(1);
+  observeQuestions();
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function updateProgress(position) {
+  const total = visibleQuestions.length;
+  if (!total) return;
+  const safePosition = Math.min(Math.max(position, 1), total);
+  progressLabel.textContent = `${safePosition} z ${total}`;
+  progressBar.style.width = `${(safePosition / total) * 100}%`;
+}
+
+function observeQuestions() {
+  if (observer) observer.disconnect();
+  const articles = [...questionList.querySelectorAll(".question")];
+  observer = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (!visible) return;
+    const position = articles.indexOf(visible.target) + 1;
+    updateProgress(position);
+  }, { rootMargin: "-88px 0px -65% 0px", threshold: 0 });
+  articles.forEach((article) => observer.observe(article));
 }
 
 menuButton.addEventListener("click", showMenu);
@@ -111,3 +151,9 @@ menuButton.addEventListener("click", showMenu);
 loadQuestions().catch((error) => {
   questionCount.textContent = error.message;
 });
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").catch((error) => {
+    console.warn("Offline režim sa nepodarilo aktivovať.", error);
+  });
+}

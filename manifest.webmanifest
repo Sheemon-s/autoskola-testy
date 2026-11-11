@@ -1,0 +1,10 @@
+{
+  "name": "Autoškola B — otázky a odpovede",
+  "short_name": "Autoškola B",
+  "lang": "sk",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#ffffff",
+  "description": "Digitálna učebnica otázok a odpovedí pre autoškolu, skupina B."
+}

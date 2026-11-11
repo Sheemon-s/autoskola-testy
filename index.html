@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Otázky a odpovede pre autoškolu, skupina B.">
     <title>Autoškola B — otázky a odpovede</title>
+    <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -27,6 +29,15 @@
         <h2 id="menu-title">Čo si chceš prečítať?</h2>
         <p class="menu-description">Otázky a odpovede sú zoradené rovnako ako v pôvodnom PDF.</p>
         <div id="topic-buttons" class="topic-buttons"></div>
+      </section>
+      <section id="reading-toolbar" class="reading-toolbar" hidden aria-label="Postup v okruhu">
+        <div class="reading-toolbar-top">
+          <strong id="active-topic"></strong>
+          <span id="progress-label"></span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
       </section>
       <div id="question-list" class="question-list" aria-live="polite"></div>
       <p class="source-note">Digitálna verzia otázok z priloženého PDF. Červenou prečiarknuté položky sú vynechané.</p>
