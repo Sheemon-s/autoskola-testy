@@ -33,6 +33,15 @@ function createQuestion(item) {
     image.src = path;
     image.alt = `Obrázok k otázke ${item.sourceNumber}`;
     image.loading = "lazy";
+    image.addEventListener("load", () => {
+      if (image.naturalWidth <= 180 && image.naturalHeight <= 180) {
+        image.classList.add("image-small");
+      } else if (image.naturalWidth < 240) {
+        image.classList.add("image-medium");
+      } else {
+        image.classList.add("image-wide");
+      }
+    });
     images.append(image);
   }
 
