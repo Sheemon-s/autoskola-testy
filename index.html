@@ -10,13 +10,24 @@
   <body>
     <header class="site-header">
       <div class="page-width">
-        <p class="eyebrow">Skupina B</p>
-        <h1>Otázky a odpovede</h1>
-        <p id="question-count" class="subtitle">Načítavam otázky…</p>
+        <div class="header-row">
+          <div>
+            <p class="eyebrow">Skupina B</p>
+            <h1>Otázky a odpovede</h1>
+            <p id="question-count" class="subtitle">Načítavam otázky…</p>
+          </div>
+          <button id="menu-button" class="back-button" type="button" hidden>Menu</button>
+        </div>
       </div>
     </header>
 
     <main class="page-width">
+      <section id="topic-menu" class="topic-menu" aria-labelledby="menu-title">
+        <p class="menu-kicker">Vyber si okruh</p>
+        <h2 id="menu-title">Čo si chceš prečítať?</h2>
+        <p class="menu-description">Otázky a odpovede sú zoradené rovnako ako v pôvodnom PDF.</p>
+        <div id="topic-buttons" class="topic-buttons"></div>
+      </section>
       <div id="question-list" class="question-list" aria-live="polite"></div>
       <p class="source-note">Digitálna verzia otázok z priloženého PDF. Červenou prečiarknuté položky sú vynechané.</p>
     </main>

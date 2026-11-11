@@ -1,5 +1,9 @@
 const questionList = document.querySelector("#question-list");
 const questionCount = document.querySelector("#question-count");
+const topicMenu = document.querySelector("#topic-menu");
+const topicButtons = document.querySelector("#topic-buttons");
+const menuButton = document.querySelector("#menu-button");
+let questions = [];
 
 function createQuestion(item) {
   const article = document.createElement("article");
@@ -40,16 +44,69 @@ async function loadQuestions() {
   const response = await fetch("data/questions.json");
   if (!response.ok) throw new Error(`Načítanie otázok zlyhalo (${response.status}).`);
 
-  const questions = await response.json();
+  questions = await response.json();
   if (!Array.isArray(questions) || questions.length === 0) {
     throw new Error("Databáza otázok je prázdna.");
   }
 
-  const fragment = document.createDocumentFragment();
-  for (const item of questions) fragment.append(createQuestion(item));
-  questionList.replaceChildren(fragment);
-  questionCount.textContent = `${questions.length} otázok na jednom mieste`;
+  createTopicMenu();
+  showMenu();
 }
+
+function createTopicMenu() {
+  const topics = new Map();
+  for (const item of questions) {
+    topics.set(item.section, (topics.get(item.section) || 0) + 1);
+  }
+
+  const fragment = document.createDocumentFragment();
+  const allButton = createTopicButton("Všetky otázky", questions.length, () => showQuestions(questions));
+  allButton.classList.add("topic-button-featured");
+  fragment.append(allButton);
+
+  for (const [name, count] of topics) {
+    fragment.append(createTopicButton(name, count, () => {
+      showQuestions(questions.filter((item) => item.section === name));
+    }));
+  }
+  topicButtons.replaceChildren(fragment);
+}
+
+function createTopicButton(name, count, onClick) {
+  const button = document.createElement("button");
+  button.className = "topic-button";
+  button.type = "button";
+  button.addEventListener("click", onClick);
+  const title = document.createElement("span");
+  title.className = "topic-title";
+  title.textContent = name;
+  const total = document.createElement("span");
+  total.className = "topic-count";
+  total.textContent = `${count} otázok`;
+  button.append(title, total);
+  return button;
+}
+
+function showMenu() {
+  topicMenu.hidden = false;
+  questionList.hidden = true;
+  menuButton.hidden = true;
+  questionCount.textContent = `${questions.length} otázok v 10 okruhoch`;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showQuestions(items) {
+  const fragment = document.createDocumentFragment();
+  for (const item of items) fragment.append(createQuestion(item));
+  questionList.replaceChildren(fragment);
+  topicMenu.hidden = true;
+  questionList.hidden = false;
+  menuButton.hidden = false;
+  questionCount.textContent = `${items.length} otázok`;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+menuButton.addEventListener("click", showMenu);
 
 loadQuestions().catch((error) => {
   questionCount.textContent = error.message;
